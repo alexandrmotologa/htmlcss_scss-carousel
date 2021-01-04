@@ -1,0 +1,56 @@
+$colorDark: #333;
+$colorLight: orange;
+$sizeW: 800px;
+$sizeH: 600px;
+$thinkness: 5px;
+
+@mixin reset {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: $colorDark;
+    @include reset;
+}
+
+.carousel {
+    width: $sizeW;
+    height: $sizeH;
+    border: $thinkness solid lighten($colorDark, 10%);
+    .slide{
+        border: 1px solid green;
+        width: inherit;
+        height: inherit;
+        >div {
+            box-sizing: border-box;
+            width: $sizeW / 8;
+            height: $sizeH / 6;
+            border: 1px solid red;
+            float: left;
+            background-image: url(slide1.jpg);
+
+            @for $y from 0 through 5{
+                @for $x from 0 through 7{                
+                    &:nth-child(#{$y * 8 + $x + 1}){
+                        background-position-x: $x * - $sizeW / 8;
+                        background-position-y:  $y * - $sizeH / 6;
+                        opacity: 0;
+                        animation-fill-mode: forwards;
+                        animation: effect-1 5s 1;
+                        animation-delay: 0.5s * ($y + $x);
+                    }
+            }
+            }
+        }
+    }
+}
+
+@keyframes effect-1{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
